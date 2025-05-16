@@ -2,18 +2,14 @@ pipeline {
     agent any
 
     environment {
+        // Adjust these paths if needed
+        MAVEN_PATH = '"C:\\Progra~1\\Apache~1\\bin\\mvn.cmd"'
+        JAVA_PATH = '"C:\\Progra~1\\Java\\jdk-xx\\bin\\java.exe"'
         SPRING_JAR = "target\\UserManagementAPI-0.0.1-SNAPSHOT.jar"
-        MAVEN_PATH = '"C:\\Program Files\\Apache\\maven\\bin\\mvn"'
-        JAVA_PATH = '"C:\\Program Files\\Java\\jdk-xx\\bin\\java"'
+        TASKKILL_PATH = 'C:\\Windows\\System32\\taskkill.exe'
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                echo 'Assuming code is already available locally...'
-            }
-        }
-
         stage('Build Spring Boot App') {
             steps {
                 bat "${MAVEN_PATH} clean install"
@@ -37,7 +33,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            bat 'taskkill /F /IM java.exe || echo No java process found'
+            bat "${TASKKILL_PATH} /F /IM java.exe || echo No java process found"
         }
         success {
             echo 'Integration tests passed!'
