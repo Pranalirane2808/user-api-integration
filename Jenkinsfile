@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         MAVEN_HOME = '"C:\\Program Files\\apache-maven-3.9.9\\bin\\mvn.cmd"'
+        PATH = "${env.PATH};C:\\Users\\jenkins\\AppData\\Roaming\\npm;C:\\Windows\\System32"
     }
 
     stages {
@@ -27,8 +28,8 @@ pipeline {
 
         stage('Run Spring Boot in Background') {
             steps {
-                bat 'start java -jar target\\user-api.jar'
-                sleep time: 15, unit: 'SECONDS'  // wait for app to start
+                bat 'start java -jar target\\UserManagementAPI-0.0.1-SNAPSHOT.jar'
+                sleep time: 15, unit: 'SECONDS'
             }
         }
 
@@ -42,7 +43,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            bat 'taskkill /F /IM java.exe || echo No java process found'
+            bat 'C:\\Windows\\System32\\taskkill.exe /F /IM java.exe || echo No java process found'
         }
         failure {
             echo 'Integration tests failed!'
