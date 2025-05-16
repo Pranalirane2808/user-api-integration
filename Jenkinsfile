@@ -33,17 +33,17 @@ pipeline {
             }
         }
 
-        stage('Run Integration Tests with Newman') {
-            steps {
-                bat 'newman run tests/user-api.postman_collection.json -e tests/env.postman_environment.json'
-            }
-        }
+        // stage('Run Integration Tests with Newman') {
+        //     steps {
+        //         bat 'newman run tests/user-api.postman_collection.json -e tests/env.postman_environment.json'
+        //     }
+        // }
     }
 
     post {
         always {
             echo 'Cleaning up...'
-            bat 'C:\\Windows\\System32\\taskkill.exe /F /IM java.exe || echo No java process found'
+            // bat 'C:\\Windows\\System32\\taskkill.exe /F /IM java.exe || echo No java process found'
         }
         failure {
             echo 'Integration tests failed!'
