@@ -19,12 +19,12 @@
           "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\"\n}"
         },
         "url": {
-          "raw": "http://localhost:8080/users",
+          "raw": "http://localhost:8082/users",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "8080",
+          "port": "8082",
           "path": [
             "users"
           ]
@@ -37,12 +37,12 @@
       "request": {
         "method": "GET",
         "url": {
-          "raw": "http://localhost:8080/users",
+          "raw": "http://localhost:8082/users",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "8080",
+          "port": "8082",
           "path": [
             "users"
           ]
