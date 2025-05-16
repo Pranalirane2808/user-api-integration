@@ -3,27 +3,27 @@ pipeline {
 
     environment {
         SPRING_JAR = "target\\UserManagementAPI-0.0.1-SNAPSHOT.jar"
+        MAVEN_PATH = '"C:\\Program Files\\Apache\\maven\\bin\\mvn"'
+        JAVA_PATH = '"C:\\Program Files\\Java\\jdk-xx\\bin\\java"'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
                 echo 'Assuming code is already available locally...'
-                // Jenkins automatically clones the repo when using Pipeline script from SCM
             }
         }
 
         stage('Build Spring Boot App') {
             steps {
-                bat 'mvn clean install'
+                bat "${MAVEN_PATH} clean install"
             }
         }
 
         stage('Run Spring Boot in Background') {
             steps {
-                // Start jar in background (Windows way)
-                bat "start /B java -jar %SPRING_JAR%"
-                bat 'timeout /t 10 /nobreak'
+                bat "start /B ${JAVA_PATH} -jar %SPRING_JAR%"
+                bat 'timeout /t 10 /nobreak > NUL'
             }
         }
 
@@ -37,8 +37,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            // Kill java process running your Spring Boot app
-            bat 'taskkill /F /IM java.exe || echo "No java process found"'
+            bat 'taskkill /F /IM java.exe || echo No java process found'
         }
         success {
             echo 'Integration tests passed!'
