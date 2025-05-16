@@ -2,29 +2,12 @@ pipeline {
     agent any
 
     environment {
-        DEFAULT_MAVEN = 'C:\\apache-maven-3.9.6\\bin\\mvn.cmd'
-        DEFAULT_NEWMAN = 'C:\\Users\\ranep\\AppData\\Roaming\\npm\\newman.cmd'
+        MAVEN_CMD = 'C:\\apache-maven-3.9.6\\bin\\mvn.cmd'
+        NEWMAN_CMD = 'C:\\Users\\ranep\\AppData\\Roaming\\npm\\newman.cmd'
         TASKKILL_PATH = 'C:\\Windows\\System32\\taskkill.exe'
     }
 
     stages {
-        stage('Detect Tools') {
-            steps {
-                script {
-                    // Try to find Maven in PATH
-                    def mvnPath = bat(script: 'where mvn', returnStdout: true).trim()
-                    env.MAVEN_CMD = mvnPath ? mvnPath : DEFAULT_MAVEN
-
-                    // Try to find Newman in PATH
-                    def newmanPath = bat(script: 'where newman', returnStdout: true).trim()
-                    env.NEWMAN_CMD = newmanPath ? newmanPath : DEFAULT_NEWMAN
-
-                    echo "Using Maven at: ${env.MAVEN_CMD}"
-                    echo "Using Newman at: ${env.NEWMAN_CMD}"
-                }
-            }
-        }
-
         stage('Setup Java & Maven') {
             steps {
                 bat 'java -version'
